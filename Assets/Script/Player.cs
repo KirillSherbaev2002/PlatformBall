@@ -43,12 +43,18 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Ball"))
         {
             ball.startBall();
+            print("DoneB");
         }
+       
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.gameObject.CompareTag("Star"))
         {
-            Destroy(collision.gameObject);
             cristals.score++;
             cristals.SetValue();
+            print("DoneS");
+            Destroy(collision.gameObject);
         }
     }
 }
