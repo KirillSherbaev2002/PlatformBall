@@ -9,11 +9,14 @@ public class LifeController : MonoBehaviour
     public GameObject GameOverCanvas;
     public GameObject CurrentCanvas;
     public GameObject Platform;
-    public GameObject ball;
+
+    public Ball ball;
+
+    public Vector3 DefaultBallPostion;
     // Start is called before the first frame update
     void Start()
     {
-        
+        ball = FindObjectOfType<Ball>();
     }
 
     // Update is called once per frame
@@ -21,52 +24,16 @@ public class LifeController : MonoBehaviour
     {
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D (Collider2D collision)
     {
-        lifes--;
-        for (int f = 1; f >= 3; f++)
+        if (collision.gameObject.CompareTag("Ball"))
         {
-            if(f > lifes)
-            {
-                Hearts[f].SetActive(true);
-            }
-            else
-            {
-                Hearts[f].SetActive(false);
-            }
+            lifes--;
+            ball.Restart();
         }
-        //if (lifes == 3)
-        //{
-        //    Hearts[0].SetActive(true);
-        //    Hearts[1].SetActive(true);
-        //    Hearts[2].SetActive(true);
-        //}
-        //if (lifes == 2)
-        //{
-        //    Hearts[0].SetActive(true);
-        //    Hearts[1].SetActive(true);
-        //    Hearts[2].SetActive(false);
-        //}
-        //if (lifes == 1)
-        //{
-        //    Hearts[0].SetActive(true);
-        //    Hearts[1].SetActive(false);
-        //    Hearts[2].SetActive(false);
-        //}
-        //if (lifes == 0)
-        //{
-        //    CurrentCanvas.SetActive(false);
-        //    GameOverCanvas.SetActive(true);
-        //    Platform.SetActive(false);
-        //}
-    }
-    public void GameRest()
-    {
-        lifes = 3;
-        CurrentCanvas.SetActive(true);
-        GameOverCanvas.SetActive(false);
-        Platform.SetActive(true);
-        ball.transform.position = new Vector3(0.05f, 3.5f, 0);
-
+        if (collision.gameObject.CompareTag("Star"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }

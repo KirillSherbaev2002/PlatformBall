@@ -5,7 +5,9 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public float speed; 
+    public float speed;
+
+    public GameObject Platfrom;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,5 +34,11 @@ public class Ball : MonoBehaviour
         {
             Gizmos.DrawRay(transform.position, rb.velocity);
         }
+    }
+
+    public void Restart()
+    {
+        transform.position = new Vector3(Platfrom.transform.position.x, Platfrom.transform.position.y + 0.5f, Platfrom.transform.position.z);
+        startBall();
     }
 }

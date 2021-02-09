@@ -9,13 +9,13 @@ public class Player : MonoBehaviour
 	public bool isStarted;
 
     public Ball ball;
+    public Cristals cristals;
 
 	public float MaxX;
 	void Start()
     {
-		//ball = FindObjectOfType<ball>();
-		//Нахождение обьекта типа ball
-		yposition = transform.position.y;
+        cristals = FindObjectOfType<Cristals>();
+        yposition = transform.position.y;
 	}
     void Update()
     {
@@ -40,6 +40,15 @@ public class Player : MonoBehaviour
 	}
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        ball.startBall();
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            ball.startBall();
+        }
+        if (collision.gameObject.CompareTag("Star"))
+        {
+            Destroy(collision.gameObject);
+            cristals.score++;
+            cristals.SetValue();
+        }
     }
 }
