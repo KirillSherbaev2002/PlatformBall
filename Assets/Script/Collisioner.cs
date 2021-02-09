@@ -26,7 +26,7 @@ public class Collisioner : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         objectLives--; 
-        if (objectLives == 0)
+        if (objectLives <= 0)
         {
             Points.pointsvalue += 1000;
             gameObject.SetActive(false);

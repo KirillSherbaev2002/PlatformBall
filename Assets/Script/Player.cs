@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
 	public bool isStarted;
 
-	//ball ball;
+    public Ball ball;
 
 	public float MaxX;
 	void Start()
@@ -38,4 +38,8 @@ public class Player : MonoBehaviour
 
 		transform.position = newPadposition;
 	}
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        ball.startBall();
+    }
 }
