@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LifeController : MonoBehaviour
 {
@@ -22,6 +23,13 @@ public class LifeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        for (int i = 0; i < 3; i++)
+        {
+            if (lifes == i)
+            {
+                Destroy(Hearts[i]);
+            }
+        }
     }
 
     private void OnTriggerEnter2D (Collider2D collision)
@@ -34,6 +42,10 @@ public class LifeController : MonoBehaviour
         if (collision.gameObject.CompareTag("Star"))
         {
             Destroy(collision.gameObject);
+        }
+        if (lifes == 0)
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }

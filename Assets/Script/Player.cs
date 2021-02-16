@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	float yposition;
+    float yposition;
 
-	public bool isStarted;
+    public bool isAuto;
 
     public Ball ball;
     public Cristals cristals;
 
-	public float MaxX;
+    public float MaxX;
+
+    public float[] ScaleArr = new float[3] { -0.9f, 1, 1.1f};
+    public int ScaleIndex;
 	void Start()
     {
         cristals = FindObjectOfType<Cristals>();
@@ -21,10 +24,9 @@ public class Player : MonoBehaviour
     {
 		Vector3 newPadposition = new Vector3();
 		//Создание нового Vector3, для передачи его автопилоту
-		if (isStarted)
+		if (isAuto)
 		{
-			//newPadposition = new Vector3(ball.transform.position.x, yposition, 0);
-			//Передача Vector3 расположения мяча
+            newPadposition = new Vector3(ball.transform.position.x, -3.78f, 0.84f);
 		}
 		else
 		{
@@ -53,8 +55,26 @@ public class Player : MonoBehaviour
         {
             cristals.score++;
             cristals.SetValue();
-            print("DoneS");
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("DarkStar"))
+        {
+            cristals.score = cristals.score - 10;
+            if (cristals.score < 0)
+            {
+                cristals.score = 0;
+            }
+            cristals.SetValue();
+            Destroy(collision.gameObject);
+        }
+    }
+    public void ChangeScale()
+    {
+        ScaleIndex++;
+        if (ScaleIndex == 3)
+        {
+            ScaleIndex = 0;
+        }
+        gameObject.transform.localScale = new Vector3 (ScaleArr[ScaleIndex], gameObject.transform.localScale.y, gameObject.transform.localScale.z);
     }
 }

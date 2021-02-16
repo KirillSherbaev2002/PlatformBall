@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Star
   - Ball
+  - border
+  - DarkStar
   layers:
   - Default
   - TransparentFX
