@@ -10,6 +10,14 @@ public class Ball : MonoBehaviour
 
     public GameObject Platfrom;
     public bool IsStarted;
+
+    [Header("Взрывные")]
+    public bool isExploide;
+    public float Radius;
+
+    [Header("Аудио")]
+    public AudioSource Bing;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +28,6 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(speedArr[speedIndex]);
         rb.velocity = rb.velocity.normalized * speedArr[speedIndex];
         if (!IsStarted)
         {
@@ -42,8 +49,10 @@ public class Ball : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = new Color(255, 255, 255, 1f);
+        Gizmos.color = Color.white;
         Gizmos.DrawRay(transform.position, rb.velocity);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, Radius);
     }
 
     public void Restart()
@@ -53,14 +62,38 @@ public class Ball : MonoBehaviour
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
+
         //C определнной вероятностью, при ударе об стенку мяч меняет свою траекторию
-        float correction = Random.Range(0, 7);
+        float correction = Random.Range(0, 4);
         if (collision.gameObject.CompareTag("border") && correction == 1)
-        { 
+        {
+            Bing.Play();
             float randX = Random.Range(-5, 0);
             Vector2 deriction = new Vector2(randX, 1);
             Vector2 force = deriction.normalized * speedArr[speedIndex];
             rb.velocity = force;
+        }
+        Exploide();
+    }
+    public void ActiveExplode()
+    {
+        isExploide = true;
+    }
+    public void Exploide()
+    {
+        int layerMask = LayerMask.GetMask("blocks");
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, Radius, layerMask);
+        foreach (Collider2D col in colliders)
+        {
+            Collisioner block = GetComponent<Collisioner>();
+            if(block == null)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                block.BlockDestroyed();
+            }
         }
     }
 }

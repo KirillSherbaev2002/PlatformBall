@@ -15,6 +15,9 @@ public class Collisioner : MonoBehaviour
 
     public GameObject PickUpCristal;
     public GameObject DarkCristal;
+    public GameObject YellowCristal;
+    public GameObject BlueCristal;
+
     public GameObject EffectDestroied;
 
     public int level;
@@ -72,6 +75,14 @@ public class Collisioner : MonoBehaviour
         if (option == 7)
         {
             Instantiate(DarkCristal, transform.position, Quaternion.identity);
+        }
+        if (option == 8)
+        {
+            Instantiate(YellowCristal, transform.position, Quaternion.identity);
+        }
+        if (option == 9)
+        {
+            Instantiate(BlueCristal, transform.position, Quaternion.identity);
         }
         CheckWin();
     }

@@ -40,22 +40,12 @@ public class Player : MonoBehaviour
 
 		transform.position = newPadposition;
 	}
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ball"))
-        {
-            ball.startBall();
-            print("DoneB");
-        }
-       
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Star"))
         {
             cristals.score++;
             cristals.SetValue();
-            Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("DarkStar"))
         {
@@ -65,8 +55,40 @@ public class Player : MonoBehaviour
                 cristals.score = 0;
             }
             cristals.SetValue();
-            Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("YellowStar"))
+        {
+            int YellowRandom = Random.Range(0, 2);
+            if (YellowRandom == 0)
+            {
+                ball.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            }
+            if (YellowRandom == 1)
+            {
+                ball.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            }
+            if (YellowRandom == 1)
+            {
+                ball.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            }
+        }
+        if (collision.gameObject.CompareTag("BlueStar"))
+        {
+            int BlueRandom = Random.Range(0, 2);
+            if (BlueRandom == 0)
+            {
+                transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            }
+            if (BlueRandom == 1)
+            {
+                transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            }
+            if (BlueRandom == 2)
+            {
+                transform.localScale = new Vector3(1f, 1f, 1f);
+            }
+        }
+        Destroy(collision.gameObject);
     }
     public void ChangeScale()
     {

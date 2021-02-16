@@ -8,6 +8,9 @@ TagManager:
   - Ball
   - border
   - DarkStar
+  - FxTemporaire
+  - YellowStar
+  - BlueStar
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Blocks
   - 
   - 
   - 
