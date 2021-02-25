@@ -14,47 +14,97 @@ public class Player : MonoBehaviour
 
     [Header("Limitations")]
     public float MaxX;
-    public float[] ScaleArr = new float[3] { -0.9f, 1, 1.1f};
+    public float[] ScaleArr = new float[3] { -0.9f, 1, 1.1f };
     public int ScaleIndex;
-	void Start()
+    void Start()
     {
         cristals = FindObjectOfType<Cristals>();
         star = FindObjectOfType<Star>();
         anti = FindObjectOfType<Anti>();
-	}
+    }
     void Update()
     {
-		Vector3 newPadposition = new Vector3();
-		//Создание нового Vector3, для передачи его автопилоту
-		if (isAuto)
-		{
-            newPadposition = new Vector3(ball.transform.position.x, -3.78f, 0.84f);
-		}
-		else
-		{
-			Vector3 mousePixelPoint = Input.mousePosition;
-
-			Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePixelPoint);
-
-			newPadposition = new Vector3(mouseWorldPosition.x, transform.position.y, 0);
-		}
-		newPadposition.x = Mathf.Clamp(newPadposition.x, -MaxX, MaxX);
-		transform.position = newPadposition;
-	}
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ball"))
+        Vector3 newPadposition = new Vector3();
+        //Создание нового Vector3, для передачи его автопилоту
+        if (isAuto)
         {
-            ball.startBall();
+            newPadposition = new Vector3(ball.transform.position.x, -3.78f, 0.84f);
         }
+        else
+        {
+            Vector3 mousePixelPoint = Input.mousePosition;
+
+            Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePixelPoint);
+
+            newPadposition = new Vector3(mouseWorldPosition.x, transform.position.y, 0);
+        }
+        newPadposition.x = Mathf.Clamp(newPadposition.x, -MaxX, MaxX);
+        transform.position = newPadposition;
     }
-    public void ChangeScale()
+    void ChangeScale()
     {
         ScaleIndex++;
         if (ScaleIndex == 3)
         {
             ScaleIndex = 0;
         }
-        gameObject.transform.localScale = new Vector3 (ScaleArr[ScaleIndex], gameObject.transform.localScale.y, gameObject.transform.localScale.z);
+        gameObject.transform.localScale = new Vector3(ScaleArr[ScaleIndex], gameObject.transform.localScale.y, gameObject.transform.localScale.z);
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            ball.startBall();
+        }
+    }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Star"))
+        {
+            cristals.score++;
+            cristals.SetValue();
+        }
+        if (collision.gameObject.CompareTag("DarkStar"))
+        {
+            cristals.score = cristals.score - 10;
+            if (cristals.score < 0)
+            {
+                cristals.score = 0;
+            }
+            cristals.SetValue();
+        }
+        if (collision.gameObject.CompareTag("YellowStar"))
+        {
+            int YellowRandom = Random.Range(0, 2);
+            if (YellowRandom == 0)
+            {
+                ball.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            }
+            if (YellowRandom == 1)
+            {
+                ball.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            }
+            if (YellowRandom == 1)
+            {
+                ball.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            }
+        }
+        if (collision.gameObject.CompareTag("BlueStar"))
+        {
+            int BlueRandom = Random.Range(0, 2);
+            if (BlueRandom == 0)
+            {
+                transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            }
+            if (BlueRandom == 1)
+            {
+                transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            }
+            if (BlueRandom == 2)
+            {
+                transform.localScale = new Vector3(1f, 1f, 1f);
+            }
+        }
+        Destroy(collision.gameObject);
     }
 }

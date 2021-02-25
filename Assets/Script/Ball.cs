@@ -18,7 +18,12 @@ public class Ball : MonoBehaviour
     public GameObject BorderCollisionEffect;
     public Vector2 CheckDirection;
     public int timesOfSameDirection;
-    // Start is called before the first frame update
+    [Header("Взрывные")]
+    public bool isExploide;
+    public float Radius;
+
+    [Header("Аудио")]
+    public AudioSource Bing;
     void Start()
     {
         rb.velocity = new Vector2(0, -1);
@@ -57,7 +62,7 @@ public class Ball : MonoBehaviour
     }
     public void startBall()
     {
-        float randX = Random.Range(-3,3);
+        float randX = Random.Range(-3, 3);
         Vector2 deriction = new Vector2(randX, 1);
         Vector2 force = deriction.normalized * speedArr[speedIndex];
         rb.velocity = force;
@@ -65,8 +70,10 @@ public class Ball : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = new Color(255, 255, 255, 1f);
+        Gizmos.color = Color.white;
         Gizmos.DrawRay(transform.position, rb.velocity);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, Radius);
     }
 
     public void Restart()
@@ -76,13 +83,14 @@ public class Ball : MonoBehaviour
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
+
         //C определнной вероятностью, при ударе об стенку мяч меняет свою траекторию
         if (collision.gameObject.CompareTag("border"))
         {
             if (CheckDirection == rb.velocity || CheckDirection == -rb.velocity)
             {
                 timesOfSameDirection++;
-                if (timesOfSameDirection >=4)
+                if (timesOfSameDirection >= 4)
                 {
                     float randX = Random.Range(-5, 0);
                     Vector2 deriction = new Vector2(randX, 1);
@@ -98,6 +106,37 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("border") || collision.gameObject.CompareTag("Collisioner"))
         {
             Instantiate(BorderCollisionEffect, transform.position, Quaternion.identity);
+            float correction = Random.Range(0, 4);
+            if (collision.gameObject.CompareTag("border") && correction == 1)
+            {
+                Bing.Play();
+                float randX = Random.Range(-5, 0);
+                Vector2 deriction = new Vector2(randX, 1);
+                Vector2 force = deriction.normalized * speedArr[speedIndex];
+                rb.velocity = force;
+            }
+            Exploide();
+        }
+        void ActiveExplode()
+        {
+            isExploide = true;
+        }
+        void Exploide()
+        {
+            int layerMask = LayerMask.GetMask("blocks");
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, Radius, layerMask);
+            foreach (Collider2D col in colliders)
+            {
+                Collisioner block = GetComponent<Collisioner>();
+                if (block == null)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    block.BlockDestroyed();
+                }
+            }
         }
     }
 }

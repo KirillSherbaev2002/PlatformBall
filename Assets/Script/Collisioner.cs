@@ -19,6 +19,9 @@ public class Collisioner : MonoBehaviour
     [Header("Импорт дропов")]
     public GameObject PickUpCristal;
     public GameObject DarkCristal;
+    public GameObject YellowCristal;
+    public GameObject BlueCristal;
+
     public GameObject EffectDestroied;
 
     public int level;
@@ -62,6 +65,14 @@ public class Collisioner : MonoBehaviour
         {
             Instantiate(DarkCristal, transform.position, Quaternion.identity);
             DarkStarScript.SetStar();
+        }
+        if (option == 8)
+        {
+            Instantiate(YellowCristal, transform.position, Quaternion.identity);
+        }
+        if (option == 9)
+        {
+            Instantiate(BlueCristal, transform.position, Quaternion.identity);
         }
         CheckWin();
     }
