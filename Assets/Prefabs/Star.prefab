@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2348278443800805045}
   - component: {fileID: 2348278443800805040}
-  - component: {fileID: 2348278443800805043}
   - component: {fileID: 2348278443800805042}
+  - component: {fileID: 509812111291868467}
+  - component: {fileID: -7234264582434258291}
   m_Layer: 0
   m_Name: Star
   m_TagString: Star
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2348278443800805044}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -11.89, y: -3.21, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 15e2ad06da7d7124480c1a80583ecc78, type: 3}
+  m_Sprite: {fileID: 21300000, guid: df9e73dea18adc8449a757aaa1489e6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -82,32 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &2348278443800805043
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2348278443800805044}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.036456347, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7, y: 7}
-    newSize: {x: 2.95, y: 2.99}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5.9477897, y: 6.6404104}
-  m_EdgeRadius: 0
 --- !u!50 &2348278443800805042
 Rigidbody2D:
   serializedVersion: 4
@@ -129,3 +104,44 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &509812111291868467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2348278443800805044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a04d4a32dd54454db2fd2fae1d51c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positiveCrystals:
+  - {fileID: 21300000, guid: feb869092d55ffd4abb480caad222daa, type: 3}
+  - {fileID: 21300000, guid: 84bedcad9d850d1409397fd579a8f3fd, type: 3}
+  - {fileID: 21300000, guid: 8ee8a848c4a6b1a40b9019990f05a9d2, type: 3}
+  - {fileID: 21300000, guid: d0ee1f560739a854a902e521bea18e4d, type: 3}
+  - {fileID: 21300000, guid: df9e73dea18adc8449a757aaa1489e6a, type: 3}
+  - {fileID: 21300000, guid: 07f582bba7b5272478bb000ffaf7c33b, type: 3}
+  postiveEffect: 140000002800000050000000a00000004001000080020000
+  positiveRandom: 4
+  period: 0
+  VisualEffect: {fileID: 1845240806346120, guid: a57f70f8665f584469aa505d86857b42,
+    type: 3}
+  cristals: {fileID: 0}
+--- !u!58 &-7234264582434258291
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2348278443800805044}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.02334559, y: 0.09166986}
+  serializedVersion: 2
+  m_Radius: 0.41584593

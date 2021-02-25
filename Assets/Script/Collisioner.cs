@@ -10,46 +10,33 @@ public class Collisioner : MonoBehaviour
     public GameObject PointsHolder;
     public Points Points;
 
+    public Star StarScript;
+    public Anti DarkStarScript;
+
     public int objectLives;
     public Sprite[] Icons = new Sprite[5];
 
+    [Header("Импорт дропов")]
     public GameObject PickUpCristal;
     public GameObject DarkCristal;
     public GameObject EffectDestroied;
 
     public int level;
 
-    public Collisioner[] NumberOfVulkans;
+    public Collisioner[] NumberOfObjects;
 
     // Start is called before the first frame update
     void Start()
     {
-        level = PlayerPrefs.GetInt("level");
-
         Points.pointsvalue = level;
-        Points.UpdatePoints();
-
         Reset();
     }
 
     public void Reset()
     {
-        objectLives = Random.Range(0, level);
+        objectLives = Random.Range(0, 10);
         gameObject.GetComponent<SpriteRenderer>().sprite = Icons[objectLives];
     }
-
-    public void ToCorrectImage()
-    {
-        for(int i = 0; i < 5; i++)
-        {
-            if (objectLives == i)
-            {
-                gameObject.GetComponent<SpriteRenderer>().sprite = Icons[i];
-            }
-        }
-    }
-
-    // Update is called once per frame
     private void OnCollisionEnter2D(Collision2D collision)
     {
         objectLives--; 
@@ -57,37 +44,37 @@ public class Collisioner : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        ToCorrectImage();
         BlockDestroyed();
     }
     public void BlockDestroyed()
     {
+        //Во время уничтожения блока срабатывает...
         Instantiate(EffectDestroied, transform.position, Quaternion.identity);
         int option = Random.Range(0, 10);
-        //Если 0-3 вкл. - ничего не падает 
-        if (option >3 && option <7)
+        //70% вероятности 
+        if (option < 6)
         {
             Instantiate(PickUpCristal, transform.position, Quaternion.identity);
+            StarScript.SetStar();
         }
+        //10% вероятности 
         if (option == 7)
         {
             Instantiate(DarkCristal, transform.position, Quaternion.identity);
+            DarkStarScript.SetStar();
         }
         CheckWin();
     }
     public void CheckWin()
     {
-        NumberOfVulkans = FindObjectsOfType<Collisioner>();
-        if (NumberOfVulkans.Length == 0)
+        NumberOfObjects = FindObjectsOfType<Collisioner>();
+        if (NumberOfObjects.Length == 0)
         {
             level++;
             if (level >= 6)
             {
                 level = 5;
             }
-
-            Points.pointsvalue = level;
-            Points.UpdatePoints();
 
             PlayerPrefs.SetInt("level", level);
             SceneManager.LoadScene(0);

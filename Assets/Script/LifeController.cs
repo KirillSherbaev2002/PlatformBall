@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class LifeController : MonoBehaviour
 {
     public GameObject[] Hearts = new GameObject[3];
+    public GameObject[] AntiHearts = new GameObject[3];
     int lifes = 3;
     public GameObject GameOverCanvas;
     public GameObject CurrentCanvas;
@@ -28,6 +29,7 @@ public class LifeController : MonoBehaviour
             if (lifes == i)
             {
                 Destroy(Hearts[i]);
+                AntiHearts[i].SetActive(true);
             }
         }
     }
@@ -45,7 +47,7 @@ public class LifeController : MonoBehaviour
         }
         if (lifes == 0)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
     }
 }

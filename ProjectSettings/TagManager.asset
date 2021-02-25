@@ -8,6 +8,8 @@ TagManager:
   - Ball
   - border
   - DarkStar
+  - FxTemporaire
+  - Collisioner
   layers:
   - Default
   - TransparentFX
